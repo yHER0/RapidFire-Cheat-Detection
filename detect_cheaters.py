@@ -9,6 +9,7 @@ df_player_hurt = parser.parse_event("player_hurt")
 df_player = parser.parse_player_info()
 players = {str(row["steamid"]): row["name"] for _, row in df_player.iterrows()}
 
+# Weapon names and the weapon cycle time in ticks
 weapons = {
     # snipers
     "awp": 70,
