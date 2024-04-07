@@ -30,16 +30,22 @@ weapons = {
 
 cheaters = []
 
+print(players.items())
 # Detect potential cheaters
 for attacker_steamid, attacker_name in players.items():
+    found_cheater = False
+
     # Filter player_hurt events for the current attacker
     df = df_player_hurt[(df_player_hurt["attacker_steamid"] == attacker_steamid) & (df_player_hurt["weapon"].isin(weapons.keys()))]
 
     for weapon_name, weapon_tick_cycle in weapons.items():
+        if found_cheater:
+            break
         # Filter events for the current weapon
         weapon_df = df[df["weapon"] == weapon_name]
         weapon_df = weapon_df.reset_index()
 
+        print(weapon_name)
         for index, row in weapon_df.iterrows():
             if index == len(weapon_df) - 1:
                 break
@@ -49,11 +55,8 @@ for attacker_steamid, attacker_name in players.items():
 
             # Check for Rapid Fire
             if 1 <= tick_between_shots < weapon_tick_cycle:
+                found_cheater = True
                 cheaters.append((attacker_steamid, attacker_name))
                 break
-        else:
-            continue
-
-        break
 
 print(f"Cheaters: {cheaters}")
