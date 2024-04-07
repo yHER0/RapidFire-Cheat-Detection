@@ -30,7 +30,6 @@ weapons = {
 
 cheaters = []
 
-print(players.items())
 # Detect potential cheaters
 for attacker_steamid, attacker_name in players.items():
     found_cheater = False
@@ -45,7 +44,6 @@ for attacker_steamid, attacker_name in players.items():
         weapon_df = df[df["weapon"] == weapon_name]
         weapon_df = weapon_df.reset_index()
 
-        print(weapon_name)
         for index, row in weapon_df.iterrows():
             if index == len(weapon_df) - 1:
                 break
